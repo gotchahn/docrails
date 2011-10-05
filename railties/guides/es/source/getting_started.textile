@@ -527,26 +527,23 @@ algunos directorios, y editará <tt>config/routes.rb</tt>. He aquí un resumen d
 |test/unit/helpers/posts_helper_test.rb       |Pruebas Unit para las funciones de ayuda de los posts|
 |config/routes.rb                             |Modificado para incluir información sobre los posts|
 
-NOTE. While scaffolding will get you up and running quickly, the code it
-generates is unlikely to be a perfect fit for your application. You'll most
-probably want to customize the generated code. Many experienced Rails developers
-avoid scaffolding entirely, preferring to write all or most of their source code
-from scratch. Rails, however, makes it really simple to customize templates for
-generated models, controllers, views and other source files. You'll find more
-information in the "Creating and Customizing Rails Generators &
-Templates":generators.html guide.
+NOTE. Ya que el scaffolding hace que comiences la aplicación rápidamente, el código que este genera
+muy seguro no sea el más adecuado para tu aplicación. Tu deberás probablemente editar el código generado.
+Muchos desarrolladores expertos en Rails evitan totalmente el scaffolding, prefiriendo escribir todo o la
+mayoría de su código fuente desde cero. Rails, sin embargo, hace realmente simple editar las plantillas
+para los modelos, controladores, vistas y otros archivos fuentes generados. Encontrarás más información
+en la guía "Creación y Edición de Generadores Rails y Plantillas":generators.html guide.
 
-h4. Running a Migration
+h4. Ejecutar una Migración
 
-One of the products of the +rails generate scaffold+ command is a _database
-migration_. Migrations are Ruby classes that are designed to make it simple to
-create and modify database tables. Rails uses rake commands to run migrations,
-and it's possible to undo a migration after it's been applied to your database.
-Migration filenames include a timestamp to ensure that they're processed in the
-order that they were created.
+Uno de los productos del comando +rails generate scaffold+ es una _migración de base de datos_.
+Las migraciones son clases de Ruby que son diseñadas simplemente para crear y modificar tablas de
+una base de datos. Rails usa comandos +rake+ para ejecutar las migraciones, y es posible deshacer
+una migración luego que esta ha sido aplicada a la base de datos. Los nombres de las migraciones
+incluyen la fecha y hora para asegurar que estas sean procesadas en el orden que fueron creadas.
 
-If you look in the +db/migrate/20100207214725_create_posts.rb+ file (remember,
-yours will have a slightly different name), here's what you'll find:
+Si observas en el archivo +db/migrate/20100207214725_create_posts.rb+ (recuerda, que el tuyo se
+llamará ligeramente diferente), he aquí lo que encontrarás:
 
 <ruby>
 class CreatePosts < ActiveRecord::Migration
@@ -562,23 +559,21 @@ class CreatePosts < ActiveRecord::Migration
 end
 </ruby>
 
-The above migration creates a method named +change+ which will be called when you
-run this migration. The action defined in that method is also reversible, which
-means Rails knows how to reverse the change made by this migration, in case you
-want to reverse it at later date. By default, when you run this migration it
-creates a +posts+ table with two string columns and a text column. It also
-creates two timestamp fields to track record creation and updating. More
-information about Rails migrations can be found in the "Rails Database
-Migrations":migrations.html guide.
+La migración arriba crea un método llamado +change+  el cual será llamado cuando tu corras
+la migración. Esta acción definida también puede ser reversible, lo que significa que Rails
+sabe como reversar un cambio hecho por una migración, en el caso que tu quieras reversarlo
+después. Por defecto, cuando corres esta migración esta crea la tabla +posts+ con dos columnas
+string y una columna de tipo texto. También crea dos campos para fecha de tipo timestamp para
+llevar el dato de cuando un registro fue creado y actualizado. Puedes encontrar más información
+acerca de las migraciones Rails en la guía "Rails Migraciones de base de datos":migrations.html guide.
 
-At this point, you can use a rake command to run the migration:
+A este punto, tu puedes usar el comando rake para ejecutar la migración:
 
 <shell>
 $ rake db:migrate
 </shell>
 
-Rails will execute this migration command and tell you it created the Posts
-table.
+Rails ejecutará este comando de migración y te dirá que creó la tabla Posts.
 
 <shell>
 ==  CreatePosts: migrating ====================================================
@@ -587,65 +582,62 @@ table.
 ==  CreatePosts: migrated (0.0020s) ===========================================
 </shell>
 
-NOTE. Because by default you're working in the development environment, this
-command will apply to the database defined in the +development+ section of your
-+config/database.yml+ file. If you would like to execute migrations in another
-environment, for instance in production, you must explicitly pass it when
-invoking the command: <tt>rake db:migrate RAILS_ENV=production</tt>.
+NOTE. Porque por defecto tu estás trabajando en el ambiente de desarrollo, este comando
+será aplicado SOLO a la base de datos definida en la sección de +development+ de tu archivo
++config/database.yml+. Si deseas correr migraciones para otros ambientes, por ejemplo
+producción, tu debes explícitamente pasarlo cuando invoques el comando: <tt>rake db:migrate RAILS_ENV=production</tt>.
 
-h4. Adding a Link
+h4. Adicionar un Enlace
 
-To hook the posts up to the home page you've already created, you can add a link
-to the home page. Open +app/views/home/index.html.erb+ and modify it as follows:
+Para enlazar los posts con la página de inicio que ya has creado, tu puedes adicionar un link
+(enlace) hacia la página de inicio. Abre +app/views/home/index.html.erb+ y modifícalo como sigue:
 
 <ruby>
-<h1>Hello, Rails!</h1>
-<%= link_to "My Blog", posts_path %>
+<h1>Hola, Rails!</h1>
+<%= link_to "Mi Blog", posts_path %>
 </ruby>
 
-The +link_to+ method is one of Rails' built-in view helpers. It creates a
-hyperlink based on text to display and where to go - in this case, to the path
-for posts.
+El método +link_to+ es uno de las funciones de ayuda para vistas incorporadas que trae Rails.
+Dicho método crea un hyperlink basado en el texto a desplegar y donde se dirige - en este caso,
+hacia la dirección para los posts.
 
-h4. Working with Posts in the Browser
+h4. Trabajar con los Posts en el Navegador
 
-Now you're ready to start working with posts. To do that, navigate to
-"http://localhost:3000":http://localhost:3000/ and then click the "My Blog"
-link:
+Ahora ya estas listo para comenzar a trabajar con los posts. Para hacerlo, navega hacia
+"http://localhost:3000":http://localhost:3000/ y luego haz clic en el enlace "Mi Blog":
 
 !images/posts_index.png(Posts Index screenshot)!
 
-This is the result of Rails rendering the +index+ view of your posts. There
-aren't currently any posts in the database, but if you click the +New Post+ link
-you can create one. After that, you'll find that you can edit posts, look at
-their details, or destroy them. All of the logic and HTML to handle this was
-built by the single +rails generate scaffold+ command.
+Este es un resultado de Rails cargando la vista +index+ de tus posts. Actualmente no hay ningún
+post creado en la base de datos, pero si tu le das clic al enlace +New Post+ (Post Nuevo) tu 
+podrás crear uno. Después de esto, encontrarás que puedes editar los posts, mirar sus detalles,
+o simplemente eliminarlos. Toda la lógica y el HTML para manejarlo fue construido por el comando
++rails generate scaffold+.
 
-TIP: In development mode (which is what you're working in by default), Rails
-reloads your application with every browser request, so there's no need to stop
-and restart the web server.
+TIP: En el modo de desarrollo (que es en el que estamos trabajando por defecto), Rails recarga
+la aplicación con cada solicitud del navegador, así que no es necesario parar y reiniciar el
+servidor web.
 
-Congratulations, you're riding the rails! Now it's time to see how it all works.
+¡Felicidades, ya estas cabalgando en rails! Ahora es tiempo de ver como que es que todo funciona.
 
-h4. The Model
+h4. El Modelo
 
-The model file, +app/models/post.rb+ is about as simple as it can get:
+El archivo del modelo, +app/models/post.rb+ es tan simple como se puede apreciar:
 
 <ruby>
 class Post < ActiveRecord::Base
 end
 </ruby>
 
-There isn't much to this file - but note that the +Post+ class inherits from
-+ActiveRecord::Base+. Active Record supplies a great deal of functionality to
-your Rails models for free, including basic database CRUD (Create, Read, Update,
-Destroy) operations, data validation, as well as sophisticated search support
-and the ability to relate multiple models to one another.
+No hay mucho que hacer con este archivo - pero nota que la clase +Post+ hereda de +ActiveRecord::Base+.
+Active Record provee una gran funcionabilidad a los modelos de Rais y de ¡gratis!, incluyendo las
+operaciones básicas de base de datos CRUD (Crear, Obtener, Actualizar y Borrar), validaciones en los datos,
+asi como soporte para búsquedas sofisticadas y la habilidad de relacionar múltiples modelos con otro.
 
-h4. Adding Some Validation
+h4. Adicionar algunas Validaciones
 
-Rails includes methods to help you validate the data that you send to models.
-Open the +app/models/post.rb+ file and edit it:
+Rails incluye métodos para ayudar a validar los datos que mandamos a los modelos. Abre el archivo
++app/models/post.rb+ y edítalo con:
 
 <ruby>
 class Post < ActiveRecord::Base
@@ -655,31 +647,31 @@ class Post < ActiveRecord::Base
 end
 </ruby>
 
-These changes will ensure that all posts have a name and a title, and that the
-title is at least five characters long. Rails can validate a variety of
-conditions in a model, including the presence or uniqueness of columns, their
-format, and the existence of associated objects.
+Estos cambios asegurarán que todos los posts tengan un nombre y un titulo, y que el título
+tenga por lo menos 5 caracteres de longitud. Rails puede validar una variedad de condiciones
+dentro de un modelo, incluyendo la presencia o unicidad de las columnas, su formato, y la
+existencia de objetos asociados.
 
-h4. Using the Console
+h4. Usando la Consola
 
-To see your validations in action, you can use the console. The console is a
-command-line tool that lets you execute Ruby code in the context of your
-application:
+Para ver las validaciones en acción, puedes utilizar la consola de Rails. Esta consola es una
+herramienta de línea de comandos que te permite ejecutar código de Ruby en el contexto de tu
+aplicación:
 
 <shell>
 $ rails console
 </shell>
 
-TIP: The default console will make changes to your database. You can instead
-open a console that will roll back any changes you make by using <tt>rails console
+TIP: La consola por defecto hará los cambios en tu base de datos. Tu puedes en vez abrir una
+consola que revertirá todos los cambios hechos al usar <tt>rails console
 --sandbox</tt> .
 
-After the console loads, you can use it to work with your application's models:
+Luego que consola carga, tu puedes usarlo para trabajar con los modelos de tu aplicación:
 
 <shell>
->> p = Post.new(:content => "A new post")
+>> p = Post.new(:content => "Un nuevo post")
 => #<Post id: nil, name: nil, title: nil,
-     content: "A new post", created_at: nil,
+     content: "Un nuevo post", created_at: nil,
      updated_at: nil>
 >> p.save
 => false
@@ -689,21 +681,21 @@ After the console loads, you can use it to work with your application's models:
                    :name=>["can't be blank"] }>
 </shell>
 
-This code shows creating a new +Post+ instance, attempting to save it and
-getting +false+ for a return value (indicating that the save failed), and
-inspecting the +errors+ of the post.
+Este código muestra como se crea una nueva instancia de +Post+, intenta salvarlo y obtiene
+un valor de retorno +false+ (indicando que el salvado falló), e inspecciona los +errores+ de
+el post.
 
-When you're finished, type +exit+ and hit +return+ to exit the console.
+Cuando hayas terminado, teclea +exit+ y luego +enter+ para salir de la consola.
 
-TIP: Unlike the development web server, the console does not automatically load
-your code afresh for each line. If you make changes to your models while the
-console is open, type +reload!+ at the console prompt to load them.
+TIP: A excepción del servidor web de desarrollo, la consola no actualiza automáticamente el
+código nuevo en cada línea. Si haces cambios en los modelos mientras está la consola abierta,
+teclea +reload!+ en el prompt de la consola para cargar dichos cambios.
 
-h4. Listing All Posts
+h4. Listando todos los Posts
 
-The easiest place to start looking at functionality is with the code that lists
-all posts. Open the file +app/controllers/posts_controller.rb+ and look at the
-+index+ action:
+El lugar más fácil para comenzar a mirar la funcionabilidad es en el código donde lista todos
+los posts. Abre el archivo +app/controllers/posts_controller.rb+ y échale un vistazo a la acción
++index+:
 
 <ruby>
 def index
@@ -716,28 +708,27 @@ def index
 end
 </ruby>
 
-+Post.all+ calls the +Post+ model to return all of the posts currently in the
-database. The result of this call is an array of posts that we store in an
-instance variable called +@posts+.
++Post.all+ llama al modelo +Post+ para retornar todos los posts que están actualmente salvados
+en la base de datos. El resultado de esta llamada es un arreglo de posts que se guarda en una
+variable instanciada que se llama +@posts+.
 
-TIP: For more information on finding records with Active Record, see "Active
-Record Query Interface":active_record_querying.html.
+TIP: Para mayor información de como encontrar registros con Active Record, mira "Active
+Record Interfaz para consultas":active_record_querying.html.
 
-The +respond_to+ block handles both HTML and JSON calls to this action. If you
-browse to "http://localhost:3000/posts.json":http://localhost:3000/posts.json,
-you'll see a JSON containing all of the posts. The HTML format looks for a view
-in +app/views/posts/+ with a name that corresponds to the action name. Rails
-makes all of the instance variables from the action available to the view.
-Here's +app/views/posts/index.html.erb+:
+El bloque +respond_to+ maneja ambas llamadas HTML y JSON en esta acción. Si tu navegas a
+"http://localhost:3000/posts.json":http://localhost:3000/posts.json, verás un JSON conteniendo
+todos los posts. El formato HTML busca una vista en +app/views/posts/+ con el nombre correspondiente
+a la acción. Rails crea todas las variables de instancia de la acción disponible para esta vista.
+He aquí +app/views/posts/index.html.erb+:
 
 <erb>
-<h1>Listing posts</h1>
+<h1>Listar los posts</h1>
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Title</th>
-    <th>Content</th>
+    <th>Nombre</th>
+    <th>Titulo</th>
+    <th>Contenido</th>
     <th></th>
     <th></th>
     <th></th>
@@ -748,9 +739,9 @@ Here's +app/views/posts/index.html.erb+:
     <td><%= post.name %></td>
     <td><%= post.title %></td>
     <td><%= post.content %></td>
-    <td><%= link_to 'Show', post %></td>
-    <td><%= link_to 'Edit', edit_post_path(post) %></td>
-    <td><%= link_to 'Destroy', post, :confirm => 'Are you sure?',
+    <td><%= link_to 'Mostrar', post %></td>
+    <td><%= link_to 'Editar', edit_post_path(post) %></td>
+    <td><%= link_to 'Borrar', post, :confirm => 'Estas seguro?',
                                      :method => :delete %></td>
   </tr>
 <% end %>
@@ -758,34 +749,33 @@ Here's +app/views/posts/index.html.erb+:
 
 <br />
 
-<%= link_to 'New post', new_post_path %>
+<%= link_to 'Nuevo post', new_post_path %>
 </erb>
 
-This view iterates over the contents of the +@posts+ array to display content
-and links. A few things to note in the view:
+En esta vista itera todo el contenido del arreglo +@posts+ para desplegar su contenido y
+enlaces. Unas pocas cosas que hacer nota en esta vista:
 
-* +link_to+ builds a hyperlink to a particular destination
-* +edit_post_path+ and +new_post_path+ are helpers that Rails provides as part of RESTful routing. You'll see a variety of these helpers for the different actions that the controller includes.
+* +link_to+ crea un hiperenlace a un destino en particular
+* +edit_post_path+ y +new_post_path+ son métodos de ayuda que Rails provee como parte de su enrutamiento REST. Tu encontrarás una variedad de estos métodos para las diferentes acciones que el
+controlado incluya.
 
-NOTE. In previous versions of Rails, you had to use +&lt;%=h post.name %&gt;+ so
-that any HTML would be escaped before being inserted into the page. In Rails
-3.0, this is now the default. To get unescaped HTML, you now use +&lt;%= raw
-post.name %&gt;+.
+NOTE. En versiones previas de Rails, tu tenías que usar +&lt;%=h post.name %&gt;+ y asi
+cualquier HTML podría escapar antes que fuera insertado en la página. En Rails 3.0, esto ahora
+es por defecto. Para tener HTML sin escape, ahora puedes usar +&lt;%= raw post.name %&gt;+.
 
-TIP: For more details on the rendering process, see "Layouts and Rendering in
-Rails":layouts_and_rendering.html.
+TIP: Para mayor detalle en como cargar un proceso, mira "Reproducción y Diseños en Rails":layouts_and_rendering.html.
 
-h4. Customizing the Layout
+h4. Editando un Diseño
 
-The view is only part of the story of how HTML is displayed in your web browser.
-Rails also has the concept of +layouts+, which are containers for views. When
-Rails renders a view to the browser, it does so by putting the view's HTML into
-a layout's HTML. In previous versions of Rails, the +rails generate scaffold+
-command would automatically create a controller specific layout, like
-+app/views/layouts/posts.html.erb+, for the posts controller. However this has
-been changed in Rails 3.0. An application specific +layout+ is used for all the
-controllers and can be found in +app/views/layouts/application.html.erb+. Open
-this layout in your editor and modify the +body+ tag:
+La vista solo es parte de la historia de como el HTML es desplegado en tu navegador.
+Rails también tiene el concepto de +layouts+ (diseños), los cuales son contenedores de las
+vistas. Cuando Rails carga una vista en el navegador, lo hace al poner el HTML de la vista
+dentro del HTML de un layout. En versiones previas de Rails, el comando +rails generate scaffold+
+podía crear automáticamente un controlador especifico para el layout, como
++app/views/layouts/posts.html.erb+, para el controlador de los posts. Sin embargo esto ha
+cambiado en Rails 3.0. El +layout+ especifico de una aplicación es usado para todos los
+controladores y puede ser encontrado en +app/views/layouts/application.html.erb+. Abre este
+diseño en el editor y modifica la etiqueta del +body+:
 
 <erb>
 <!DOCTYPE html>
@@ -804,13 +794,13 @@ this layout in your editor and modify the +body+ tag:
 </html>
 </erb>
 
-Now when you refresh the +/posts+ page, you'll see a gray background to the
-page. This same gray background will be used throughout all the views for posts.
+Ahora cuando tu refrescas la pagina de +/posts+, tu verás un fondo gris en la pagina.
+Este mismo fondo gris será usado a través de todas las vistas de los posts.
 
-h4. Creating New Posts
+h4. Creando Nuevos Posts.
 
-Creating a new post involves two actions. The first is the +new+ action, which
-instantiates an empty +Post+ object:
+La creación de un nuevo post involucra 2 acciones. El primero es la acción +new+, el cual
+instancia un objeto vacío de +Post+:
 
 <ruby>
 def new
@@ -823,25 +813,24 @@ def new
 end
 </ruby>
 
-The +new.html.erb+ view displays this empty Post to the user:
+La vista +new.html.erb+ despliega esta Post vacío para el usuario:
 
 <erb>
-<h1>New post</h1>
+<h1>Nuevo post</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', posts_path %>
-</erb>
+<%= link_to 'Regresar', posts_path %>
+</erb>ß
 
-The +&lt;%= render 'form' %&gt;+ line is our first introduction to _partials_ in
-Rails. A partial is a snippet of HTML and Ruby code that can be reused in
-multiple locations. In this case, the form used to make a new post is basically
-identical to the form used to edit a post, both having text fields for the name and
-title, a text area for the content, and a button to create the new post or to update
-the existing one.
+La línea +&lt;%= render 'form' %&gt;+ es nuestra primer introducción a los _parciales_ en
+Rails. Un parcial es un bloque de código HTML y Ruby que puede ser usado en multiples
+localidades. En este caso, la forma que suele crear un nuevo post es basicamente
+identica a la forma usada para editar un post, ambos teniendo campos para el nombre y
+el titulo, una área de texto para el contenido, y un botón para crear un nuevo post o
+actualizar uno existente.
 
-If you take a look at +views/posts/_form.html.erb+ file, you will see the
-following:
+Si miras al archivo +views/posts/_form.html.erb+, tu verás lo siguiente:
 
 <erb>
 <%= form_for(@post) do |f| %>
@@ -875,34 +864,35 @@ following:
 <% end %>
 </erb>
 
-This partial receives all the instance variables defined in the calling view
-file. In this case, the controller assigned the new +Post+ object to +@post+,
-which will thus be available in both the view and the partial as +@post+.
+Este parcial recibe todas las instancias de las variables definidas en el archivo
+que llama a la vista. En este caso, el controlador asigna el nuevo objeto +Post+ a
++@post+, el cual por ende puede estar disponible tanto en la vista como en el parcial
+como +@post+.
 
-For more information on partials, refer to the "Layouts and Rendering in
-Rails":layouts_and_rendering.html#using-partials guide.
+Para mayor información acerca de parciales. ve hacia la guía "Reproducción y Diseños 
+en Rails":layouts_and_rendering.html#using-partials.
 
-The +form_for+ block is used to create an HTML form. Within this block, you have
-access to methods to build various controls on the form. For example,
-+f.text_field :name+ tells Rails to create a text input on the form and to hook
-it up to the +name+ attribute of the instance being displayed. You can only use
-these methods with attributes of the model that the form is based on (in this
-case +name+, +title+, and +content+). Rails uses +form_for+ in preference to
-having you write raw HTML because the code is more succinct, and because it
-explicitly ties the form to a particular model instance.
+El bloque +form_for+ es usado para crear una forma de HTML. Dentro de este bloque tu
+puedes tener acceso a los métodos para construir varios controles en la forma. Por ejemplo,
++f.text_field :name+ le dice a Rails como crear un entrada de texto en la forma y esta
+enlazado con el atributo +name+ de la instancia que esta siendo desplegada. Tu puedes usar
+solamente estos métodos con los atributos del modelo en el cual la forma es basada (en este
+caso +name+, +title+, y +content+). Rails usa +form_for+ como preferencia a escribir
+HTML puro porque este código es más sucinto, y porque explícitamente ata la forma con una
+instancia particular de un modelo.
 
-The +form_for+ block is also smart enough to work out if you are doing a _New
-Post_ or an _Edit Post_ action, and will set the form +action+ tags and submit
-button names appropriately in the HTML output.
+El bloque +form_for+ también es lo suficientemente inteligente para saber si tu estas
+haciendo una acción de _Nuevo Post_ o _Editar Post_, y configurará las etiquetas +action+
+de la forma y un botón apropiado en el HTML final.
 
-TIP: If you need to create an HTML form that displays arbitrary fields, not tied
-to a model, you should use the +form_tag+ method, which provides shortcuts for
-building forms that are not necessarily tied to a model instance.
+TIP: Si tu deseas crear una forma HTML para que despliegue los campos arbitrariamente,
+no atada a un modelo, entonces tu debes de usar el método +form_tag+, el cual provee atajos
+para construir formas que no necesariamente están atadas a una instancia de un modelo.
 
-When the user clicks the +Create Post+ button on this form, the browser will
-send information back to the +create+ action of the controller (Rails knows to
-call the +create+ action because the form is sent with an HTTP POST request;
-that's one of the conventions that were mentioned earlier):
+Cuando un usuario le da clic al botón de +Create Post+ en esta forma, el navegador enviará
+la información a la acción +create+ en el controlador (Rails sabe como llamar la acción +create+
+porque la forma es enviada con una solicitud HTTP POST; ese es uno de las convenciones que
+mencionamos anteriormente):
 
 <ruby>
 def create
@@ -923,25 +913,26 @@ def create
 end
 </ruby>
 
-The +create+ action instantiates a new Post object from the data supplied by the
-user on the form, which Rails makes available in the +params+ hash. After
-successfully saving the new post, +create+ returns the appropriate format that
-the user has requested (HTML in our case). It then redirects the user to the
-resulting post +show+ action and sets a notice to the user that the Post was
-successfully created.
+La acción +create+ instancia un nuevo objeto Post de la data proveida por el usuario en
+la forma, el cual Rails hace disponible en la hash de +params+. Después de haber salvado
+satisfactoriamente un nuevo post, +create+ retorna el formato adecuado que el usuario ha
+solicitado (HTML en nuestro caso). Luego se redirecciona al usuario al post resultante
+con la acción +show+ y configura el mansaje de que el usuario ha salvado correctamente un
+nuevo Post.
 
-If the post was not successfully saved, due to a validation error, then the
-controller returns the user back to the +new+ action with any error messages so
-that the user has the chance to fix the error and try again.
+Si el post no fue salvado correctamente, por las validaciones, entonces el controlador
+retorna al usuario de regreso a la acción +new+ con los mensajes de errores para que el
+usuario tenga la oportunidad de corregir el problema y tratar de nuevo.
 
-The "Post was successfully created." message is stored in the Rails
-+flash+ hash (usually just called _the flash_), so that messages can be carried
-over to another action, providing the user with useful information on the status
-of their request. In the case of +create+, the user never actually sees any page
-rendered during the post creation process, because it immediately redirects to
-the new +Post+ as soon as Rails saves the record. The Flash carries over a message to
-the next action, so that when the user is redirected back to the +show+ action,
-they are presented with a message saying "Post was successfully created."
+El mensaje "Post was successfully created." (Post fue creado satisfactoriamente) es almacenado
+en la tabla hash de Rails +flash+ (usualmente solo llamada _el flash_), así esos mensajes pueden
+ser transferidos a otra acción, proveyendo al usuario información útil del estado de sus
+peticiones. En el caso de +create+, el usuario nunca practicamente mira ninguna página
+cargada durante el proceso de creación, porque inmediatamente se redirecciona hacia al nuevo
++Post+ tan pronto como Rails salve el registro. El Flash lleva consigo el mensaje hacia la
+siguiente acción, para que cuando el usuario es redireccionado hacia la acción +show+, estos
+sean presentados con un mensaje que diga que los Posts fueron creados satisfactoriamente
+("Post was successfully created.").
 
 h4. Showing an Individual Post
 
