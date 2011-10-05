@@ -10,7 +10,7 @@ familiarizado con:
 
 endprologue.
 
-PRECAUCIÓN. Esta guía esta basada en Rails 3.1. Algunos de los códigos aqui mostrados no
+WARNING. Esta guía esta basada en Rails 3.1. Algunos de los códigos aqui mostrados no
 podrán funcionar en versiones anteriores de Rails.
 
 h3. Esta guía asume
@@ -194,100 +194,93 @@ Fielding:
 * "How to GET a Cup of Coffee":http://www.infoq.com/articles/webber-rest-workflow by Jim Webber, Savas Parastatidis &
 Ian Robinson
 
-h3. Creating a New Rails Project
+h3. Creando un nuevo proyecto de Rails
 
-If you follow this guide, you'll create a Rails project called <tt>blog</tt>, a
-(very) simple weblog. Before you can start building the application, you need to
-make sure that you have Rails itself installed.
+Si sigues esta guía, crearás un proyecto de Rails llamado <tt>blog</tt>, un (muy) simple weblog.
+Antes de comenzar a construir la aplicación, necesitas estar seguro que tienes Rails instalado.
 
-TIP: The examples below use # and $ to denote terminal prompts. If you are using Windows, your prompt will look something like c:\source_code>
+TIP: Los ejemplos siguientes usa # y $ para denotar prompts de terminales. Si estas usando Windows, tu prompt lucirá como c:\source_code>
 
-h4. Installing Rails
+h4. Instalando Rails
 
-In most cases, the easiest way to install Rails is to take advantage of RubyGems:
+En muchos casos, la manera más facil de instalar Rails es tomar ventaja de los RubyGems:
 
 <shell>
-Usually run this as the root user:
+Usualmente corre lo siguiente como el usuario raiz:
 # gem install rails
 </shell>
 
-TIP. If you're working on Windows, you can quickly install Ruby and Rails with
+TIP. Si estas trabajando en Windows, puedes rapidamente instalar Ruby y Rails con
 "Rails Installer":http://railsinstaller.org.
 
-h4. Creating the Blog Application
+h4. Creando una Aplicación Blog
 
-The best way to use this guide is to follow each step as it happens, no code or
-step needed to make this example application has been left out, so you can
-literally follow along step by step. If you need to see the completed code, you
-can download it from "Getting Started
+La mejor manera de usar esta guía es seguir cada paso como se explica, ningún código o paso
+necesitado para realizar el ejemplo fue olvidado, por ende puedes seguir literalmente paso a 
+paso. Si necesitas el código completo, lo puedes bajar de "Getting Started
 Code":https://github.com/mikel/getting-started-code.
 
-To begin, open a terminal, navigate to a folder where you have rights to create
-files, and type:
+Para empezar, abre una terminal o consola, navega hasta el folder donde tienes los permisos
+adecuados para crear archivos y digita:
 
 <shell>
 $ rails new blog
 </shell>
 
-This will create a Rails application called Blog in a directory called blog.
+Esto creará una aplicación Rails llamada Blog en un directorio llamado blog.
 
-TIP: You can see all of the switches that the Rails application builder accepts
-by running
+TIP: Puedes ver todas las opciones que el constructor de una aplicación Rails acepta, corriendo
 <tt>rails new -h</tt>.
 
-After you create the blog application, switch to its folder to continue work
-directly in that application:
+Después de crear la aplicación blog, cambia a su folder para continuar trabajando directamente
+en la aplicación:
 
 <shell>
 $ cd blog
 </shell>
 
-In any case, Rails will create a folder in your working directory called
-<tt>blog</tt>. Open up that folder and explore its contents. Most of the work in
-this tutorial will happen in the <tt>app/</tt> folder, but here's a basic
-rundown on the function of each folder that Rails creates in a new application
-by default:
+En cualquier caso, Rails creará un folder en tu directorio de trabajo llamado <tt>blog</tt>. 
+Abre dicho folder y explora sus contenidos. La mayoría del trabajo en este tutorial sucederá
+en el folder <tt>app/</tt>, pero he aquí una explicación básica de la función de cada folder
+que Rails crea en una nueva aplicación por defecto:
 
 |_.File/Folder|_.Purpose|
-|Gemfile|This file allows you to specify what gem dependencies are needed for your Rails application. See section on Bundler, below.|
-|README|This is a brief instruction manual for your application. You should edit this file to tell others what your application does, how to set it up, and so on.|
-|Rakefile|This file locates and loads tasks that can be run from the command line. The task definitions are defined throughout the components of Rails. Rather than changing Rakefile, you should add your own tasks by adding files to the lib/tasks directory of your application.|
-|app/|Contains the controllers, models, views and assets for your application. You'll focus on this folder for the remainder of this guide.|
-|config/|Configure your application's runtime rules, routes, database, and more.|
-|config.ru|Rack configuration for Rack based servers used to start the application.|
-|db/|Shows your current database schema, as well as the database migrations. You'll learn about migrations shortly.|
-|doc/|In-depth documentation for your application.|
-|lib/|Extended modules for your application (not covered in this guide).|
-|log/|Application log files.|
-|public/|The only folder seen to the world as-is. Contains the static files and compiled assets.|
-|script/|Contains the rails script that starts your app and can contain other scripts you use to deploy or run your application.|
-|test/|Unit tests, fixtures, and other test apparatus. These are covered in "Testing Rails Applications":testing.html|
-|tmp/|Temporary files|
-|vendor/|A place for all third-party code. In a typical Rails application, this includes Ruby Gems, the Rails source code (if you install it into your project) and plugins containing additional prepackaged functionality.|
+|Gemfile|Este archivo permite que tu especifiques que dependencia de gems son necesitadas por tu aplicación Rails. Mira la sección de Bundler, abajo.|
+|README| Este es un breve manual de instrucciones para tu aplicación. Tu puedes editar dicho archivo y contar a otros de que es lo que hace tu aplicación, como configurarlo, entre otras cosas.|
+|Rakefile|Este archivo localiza y carga las tareas que pueden ser ejecutadas en la consola o terminal. La definición de tareas son explicadas a través de los componentes de Rails. En vez de cambiar el Rakefile, tu deberías agregar tus propias tareas dentro del folder lib/tasks de tu aplicación.|
+|app/|Contiene los controladores, modelos, vistas y recursos para tu aplicación. Te concentrarás en este folder durante esta guía.|
+|config/|Configura las reglas de ejecución, rutas, base de datos entre otras cosas de tu aplicación.|
+|config.ru|Congiguración Rack para servidores basados en Rack usados para comenzar tu aplicación.|
+|db/|Muestra el esquema actual de tu base de datos, asi como las migraciones. Aprenderás acerca de migraciones en breve.|
+|doc/|Documentación mas profunda acerca de tu aplicación.|
+|lib/|Módulos extendidos para tu aplicación (no abarcados en esta guía).|
+|log/|Los archivos log de la aplicación.|
+|public/|El único folder visto por el mundo como tal. Contiene archivos estáticos y recursos compilados.|
+|script/|Contiene los scripts de Rails que hacen comenzar tu aplicación y puede contener otros scripts que puedes usar para publicar o ejecutar tu aplicación.|
+|test/|Pruebas unitarias, fixtures en otros componentes de prueba. Estos son cubiertos por el tutorial "Test Aplicaciones Rails":testing.html|
+|tmp/|Archivos temporales|
+|vendor/|Un lugar para códigos de tercero. En una aplicación Rails típica, esto incluye Ruby Gems, el código fuente de Rails (si lo instalas dentro del proyecto) y plugins que contienen funcionabilidades adicionales.|
 
-h4. Configuring a Database
+h4. Configurando una Base de Datos
 
-Just about every Rails application will interact with a database. The database
-to use is specified in a configuration file, +config/database.yml+.  If you open
-this file in a new Rails application, you'll see a default database
-configuration using SQLite3. The file contains sections for three different
-environments in which Rails can run by default:
+Se podría decir que cada aplicación Rails interactúa con una base de datos. La base de datos a usar
+es especificada en el archivo de configuración, +config/database.yml+. Si tu abres dicho archivo en 
+una nueva aplicación Rails, encontrarás una configuración de base de datos por defecto usando SQLite3.
+Este archivo contiene secciones para 3 diferentes ambientes en los cuales Rails puede ejecutarse por defecto:
 
-* The +development+ environment is used on your development computer as you interact manually with the application.
-* The +test+ environment is used to run automated tests.
-* The +production+ environment is used when you deploy your application for the world to use.
+* El ambiente +development+ (desarrollo) es usado en tu computadora para que interactúes manualmente con la aplicación.
+* El ambiente +test+ (prueba) es usado para correr pruebas automatizadas.
+* El ambiente +production+ (producción) es usado cuando tu publicas tu aplicación al mundo para que la use.
 
-h5. Configuring an SQLite3 Database
+h5. Configurando una Base de Datos de SQLite3
 
-Rails comes with built-in support for "SQLite3":http://www.sqlite.org, which is
-a lightweight serverless database application. While a busy production
-environment may overload SQLite, it works well for development and testing.
-Rails defaults to using an SQLite database when creating a new project, but you
-can always change it later.
+Rails viene con un soporte integrado para "SQLite3":http://www.sqlite.org, la cual es una
+aplicación de base de datos ligera y sin necesidad de un server. Mientras que un ambiente congestionado
+de producción puede sobrecargar SQLite, esta trabaja de muy bien para ambientes de desarrollo y pruebas.
+Rails usa por defecto una base de datos SQLite pero tu puedes cambiarla después.
 
-Here's the section of the default configuration file
-(<tt>config/database.yml</tt>) with connection information for the development
-environment:
+He aquí una sección del archivo de configuración por defecto:
+(<tt>config/database.yml</tt>) con la información de conexión necesaria para el ambiente de desarrollo:
 
 <yaml>
 development:
@@ -297,17 +290,15 @@ development:
   timeout: 5000
 </yaml>
 
-NOTE: In this guide we are using an SQLite3 database for data storage, because
-it is a zero configuration database that just works. Rails also supports MySQL
-and PostgreSQL "out of the box", and has plugins for many database systems. If
-you are using a database in a production environment Rails most likely has an
-adapter for it.
+NOTE: En esta guía se usa una base de datos SQLite3 para el almacenamiento, porque es una configuración
+básica de base de datos que trabaja muy bien. Rails también soporta MySQL y PostgreSQL, además tiene 
+plugins para otros sistemas de base de datos. Si usas una base de datos en un ambiente de producción
+muy seguro haya un adaptador para tal.
 
-h5. Configuring a MySQL Database
+h5. Configurando una base de datos de MySQL
 
-If you choose to use MySQL instead of the shipped SQLite3 database, your
-+config/database.yml+ will look a little different. Here's the development
-section:
+Si tu deseas usar MySQL en vez de SQLite3, tu +config/database.yml+ se verá un poco diferente. He aquí
+la sección del ambiente de desarrollo:
 
 <yaml>
 development:
@@ -320,14 +311,14 @@ development:
   socket: /tmp/mysql.sock
 </yaml>
 
-If your development computer's MySQL installation includes a root user with an
-empty password, this configuration should work for you. Otherwise, change the
-username and password in the +development+ section as appropriate.
+Si tu computadoras para desarrollo tiene una instalación de MySQL que incluye un usuario raíz
+con un password vacío, esta configuración debería de trabajar perfectamente. Si no, cambia el
+usuario y password apropiados en la sección de +development+.
 
-h5. Configuring a PostgreSQL Database
+h5. Configurando una base de datos de PostgreSQL
 
-If you choose to use PostgreSQL, your +config/database.yml+ will be customized
-to use PostgreSQL databases:
+Si eliges PostgreSQL, tu +config/database.yml+ deberá ser editado para que use bases de datos
+PostgreSQL:
 
 <yaml>
 development:
@@ -339,10 +330,10 @@ development:
   password:
 </yaml>
 
-h5. Configuring an SQLite3 Database for JRuby Platform
+h5. Configurando una base de datos SQLite3 para una plataforma JRuby
 
-If you choose to use SQLite3 and are using JRuby, your +config/database.yml+ will
-look a little different. Here's the development section:
+Si decides usar SQLite3 y estas usando JRuby, tu +config/database.yml+ se verá un poco
+diferente. He aquí la sección de desarrollo:
 
 <yaml>
 development:
@@ -350,10 +341,10 @@ development:
   database: db/development.sqlite3
 </yaml>
 
-h5. Configuring a MySQL Database for JRuby Platform
+h5. Configurando una base de datos  MySQL para una plataforma JRuby
 
-If you choose to use MySQL and are using JRuby, your +config/database.yml+ will look
-a little different. Here's the development section:
+Si decides usar MySQL y estas usando JRuby, tu +config/database.yml+ se verá un poco
+diferente. He aquí la sección de desarrollo:
 
 <yaml>
 development:
@@ -363,11 +354,10 @@ development:
   password:
 </yaml>
 
-h5. Configuring a PostgreSQL Database for JRuby Platform
+h5. Configurando una base de datos  PostgreSQL para una plataforma JRuby
 
-Finally if you choose to use PostgreSQL and are using JRuby, your
-+config/database.yml+ will look a little different. Here's the development
-section:
+Finalmente si decides usar PostgreSQL y JRuby, tu +config/database.yml+ se verá un poco
+diferente. He aquí la sección de desarrollo:
 
 <yaml>
 development:
@@ -378,112 +368,108 @@ development:
   password:
 </yaml>
 
-Change the username and password in the +development+ section as appropriate.
+Recuerda cambiar el usuario y password apropiados en la sección de +development+
 
-TIP: You don't have to update the database configurations manually. If you look at the
-options of the application generator, you will see that one of the options
-is named <tt>--database</tt>. This option allows you to choose an adapter from a
-list of the most used relational databases. You can even run the generator
-repeatedly: <tt>cd .. && rails new blog --database=mysql</tt>. When you confirm the overwriting
- of the +config/database.yml+ file, your application will be configured for MySQL
-instead of SQLite.
+TIP: No tienes que actualizar las configuraciones de las bases de datos manualmente. Si miras en
+las opciones del generado de aplicaciones, verás que una de las opciones es llamada <tt>--database</tt>.
+Esta opción te permite seleccionar un adaptador de una lista de las más usadas bases de datos relacionales.
+También puedes incluso ejecutar el generador repetidamente: <tt>cd .. && rails new blog --database=mysql</tt>.
+Cuando confirmes la sobre escritura del archivo +config/database.yml+, tu aplicación será configurada
+para MySQL en vez de SQLite.
 
-h4. Creating the Database
+h4. Creando una base de datos
 
-Now that you have your database configured, it's time to have Rails create an
-empty database for you. You can do this by running a rake command:
+Ahora que tienes la base de datos configurada, es tiempo para que Rails cree una base de datos vacía para ti.
+Puedes hacerlo al ejecutar el comando rake:
 
 <shell>
 $ rake db:create
 </shell>
 
-This will create your development and test SQLite3 databases inside the
-<tt>db/</tt> folder.
+Esto creará la bases de datos SQLite3 para los ambientes de desarrollo y pruebas dentro del folder
+<tt>db/</tt>.
 
-TIP: Rake is a general-purpose command-runner that Rails uses for many things.
-You can see the list of available rake commands in your application by running
+TIP: Rake ejecuta comandos de propósitos generales y Rails lo utiliza para muchas cosas.
+Puedes ver la lista de comandos rake disponibles en tu aplicación al correr:
 +rake -T+.
 
-h3. Hello, Rails!
+h3. Hola, Rails!
 
-One of the traditional places to start with a new language is by getting some
-text up on screen quickly. To do this, you need to get your Rails application
-server running.
+Uno de los puntos mas tradicionales para comenzar a aprender un nuevo lenguaje es mostrar un
+simple texto en pantalla rápidamente. Para hacerlo, necesitas poner en ejecución el servidor
+de tu aplicación Rails
 
-h4. Starting up the Web Server
+h4. Arrancando el Servidor Web
 
-You actually have a functional Rails application already. To see it, you need to
-start a web server on your development machine. You can do this by running:
+Actualmente tienes una aplicación Rails funcional. Para comprobarlo necesitas arrancar el
+servidor web de tu computadora de desarrollo. Lo puedes lograr ejecutando:
 
 <shell>
 $ rails server
 </shell>
 
-This will fire up an instance of the WEBrick web server by default (Rails can
-also use several other web servers). To see your application in action, open a
-browser window and navigate to "http://localhost:3000":http://localhost:3000.
-You should see Rails' default information page:
-
+Esto arrancará una instancia del servidor web por defecto WEBrick (Rails puede usar un gran numero
+de otros servidores web). Para comprobar que la aplicación se esta ejecutando con éxito, abre un
+navegador y ve hacia "http://localhost:3000":http://localhost:3000.
+Deberías ver la página informativa por defecto de Rails:
 !images/rails_welcome.png(Welcome Aboard screenshot)!
 
-TIP: To stop the web server, hit Ctrl+C in the terminal window where it's
-running. In development mode, Rails does not generally require you to stop the
-server; changes you make in files will be automatically picked up by the server.
+TIP: Para detener el servidor web, teclea Ctrl+C en ventana de la terminal donde el servidor
+esta ejecutándose. En el modo de desarrollo, Rails por lo general no requiere que pares el 
+servidor cuando haces cambios a los archivos; estos serán actualizados automáticamente.
 
-The "Welcome Aboard" page is the _smoke test_ for a new Rails application: it
-makes sure that you have your software configured correctly enough to serve a
-page. You can also click on the _About your application’s environment_ link to
-see a summary of your application's environment.
+La página "Welcome Aboard" es la _prueba de humo_ para una aplicación en Rails: en la misma
+se valida que tu tengas el software configurado correctamente para mostrar una página.
+También puedes darle click en el link _About your application’s environment_ (Acerca del ambiente 
+de tu aplicación) para ver un detalle sumarizado del ambiente de ejecución.
 
-h4. Say "Hello", Rails
+h4. Di "Hola", Rails
 
-To get Rails saying "Hello", you need to create at minimum a controller and a
-view. Fortunately, you can do that in a single command. Enter this command in
-your terminal:
+Para lograr que Rails diga "Hola",necesitarás como minimo crear un controlador y una vista.
+Afortunadamente, lo puedes lograr en una sola linea de comandos. Ejecuta este comando en tu
+terminal:
 
 <shell>
 $ rails generate controller home index
 </shell>
 
-TIP: If you get a command not found error when running this command, you
-need to explicitly pass Rails +rails+ commands to Ruby: <tt>ruby
-\path\to\your\application\script\rails generate controller home index</tt>.
+TIP: Si recibes un error al ejecutar el comando, necesitas pasar explicitamente comandos de
+Rails +rails+ a Ruby: <tt>ruby\path\to\your\application\script\rails generate controller home index</tt>.
 
-Rails will create several files for you, including
-+app/views/home/index.html.erb+. This is the template that will be used to
-display the results of the +index+ action (method) in the +home+ controller.
-Open this file in your text editor and edit it to contain a single line of code:
+Rails creará varios archivos para ti, incluyendo
++app/views/home/index.html.erb+. Esta plantilla será usada para desplegar
+los resultados de la acción (método) +index+ en el controlador +home+.
+Abre este archivo en un editor de texto y edítalo para contener una sola línea de código:
 
 <code class="html">
-<h1>Hello, Rails!</h1>
+<h1>Hola, Rails!</h1>
 </code>
 
-h4. Setting the Application Home Page
+h4. Configurando la página de Inicio de la Aplicación
 
-Now that we have made the controller and view, we need to tell Rails when we
-want "Hello Rails" to show up. In our case, we want it to show up when we
-navigate to the root URL of our site,
-"http://localhost:3000":http://localhost:3000, instead of the "Welcome Aboard"
-smoke test.
+Ahora que hemos creado el controlador y la vista, necesitamos decirle a Rails que
+queremos mostrar "Hola, Rails". En nuestro caso, queremos que se muestre cuando se
+navega al URL raiz de nuestro sitio, "http://localhost:3000":http://localhost:3000, 
+en vez de la prueba de humo "Welcome Aboard".
 
-The first step to doing this is to delete the default page from your
-application:
+El primer paso para lograr esto es borrando la página por defecto de tu aplicación:
 
 <shell>
 $ rm public/index.html
 </shell>
 
-We need to do this as Rails will deliver any static file in the +public+
-directory in preference to any dynamic content we generate from the controllers.
+Necesitamos hacer esto para que Rails pueda entregar cualquier archivo estático en el
+directorio +public+ en preferencia a cualquier contenido dinámico que generamos desde
+los controladores.
 
-Now, you have to tell Rails where your actual home page is located. Open the
-file +config/routes.rb+ in your editor. This is your application's _routing
-file_ which holds entries in a special DSL (domain-specific language) that tells
-Rails how to connect incoming requests to controllers and actions. This file
-contains many sample routes on commented lines, and one of them actually shows
-you how to connect the root of your site to a specific controller and action.
-Find the line beginning with +root :to+, uncomment it and change it like the
-following:
+Ahora, tienes que decirle a Rails donde esta localizada tu página de inicio. Abre el 
+archivo +config/routes.rb+ en tu editor. Este es el _archivo de enrutamiento_ de tu
+aplicación el cual contiene todas las entradas en un especial DSL (lenguaje de dominios
+específicos) que le dice a Rails como conectar peticiones entrantes con controladores y
+acciones. Este archivo contiene varias rutas de ejemplo en líneas de comentarios, y una
+de ellas actualmente muestra como conectar la raíz de tu sitio con un controlador  y una
+acción específica. Encuentra dicha linea comenzando con +root :to+, des coméntalo y cámbialo
+como lo siguiente:
 
 <ruby>
 Blog::Application.routes.draw do
@@ -494,52 +480,52 @@ Blog::Application.routes.draw do
   root :to => "home#index"
 </ruby>
 
-The +root :to => "home#index"+ tells Rails to map the root action to the home
-controller's index action.
+La instrucción +root :to => "home#index"+ le dice a Rails que mapee la acción raíz con el
+controlador de la acción índice.
 
-Now if you navigate to "http://localhost:3000":http://localhost:3000 in your
-browser, you'll see +Hello, Rails!+.
+Ahora si navegas a "http://localhost:3000":http://localhost:3000 en tu navegador, verás que
+dice +Hola, Rails!+.
 
-NOTE. For more information about routing, refer to "Rails Routing from the
-Outside In":routing.html.
+NOTE. Para más información acerca de enrutamiento, ve a la página "Rails enrutando desde
+afuera hacia adentro":routing.html.
 
-h3. Getting Up and Running Quickly with Scaffolding
+h3. Comenzando y Corriendo rápidamente con Scaffolding
 
-Rails _scaffolding_ is a quick way to generate some of the major pieces of an
-application. If you want to create the models, views, and controllers for a new
-resource in a single operation, scaffolding is the tool for the job.
+Rails _scaffolding_ es una forma rápida de generar algunos de las mayores piezas de una
+aplicación. Si deseas crear los modelos, vistas, y controladores para un nuevo recurso
+en una sola operación, scaffolding es la herramienta que necesitas.
 
-h3. Creating a Resource
+h3. Creando un Recurso
 
-In the case of the blog application, you can start by generating a scaffolded
-Post resource: this will represent a single blog posting. To do this, enter this
-command in your terminal:
+En el caso de la aplicación blog, tu puedes comenzar generando un recurso Post (entradas del Blog) con el
+scaffold: esto representará un solo post del blog. Para hacer esto, corre lo siguiente
+en la terminal:
 
 <shell>
 $ rails generate scaffold Post name:string title:string content:text
 </shell>
 
-The scaffold generator will build several files in your application, along with some
-folders, and edit <tt>config/routes.rb</tt>. Here's a quick overview of what it creates:
+El generador scaffold construirá una colección de archivos en tu aplicación, en conjunto con
+algunos directorios, y editará <tt>config/routes.rb</tt>. He aquí un resumen de lo que se crea:
 
-|_.File                                       |_.Purpose|
-|db/migrate/20100207214725_create_posts.rb    |Migration to create the posts table in your database (your name will include a different timestamp)|
-|app/models/post.rb                           |The Post model|
-|test/fixtures/posts.yml                      |Dummy posts for use in testing|
-|app/controllers/posts_controller.rb          |The Posts controller|
-|app/views/posts/index.html.erb               |A view to display an index of all posts |
-|app/views/posts/edit.html.erb                |A view to edit an existing post|
-|app/views/posts/show.html.erb                |A view to display a single post|
-|app/views/posts/new.html.erb                 |A view to create a new post|
-|app/views/posts/_form.html.erb               |A partial to control the overall look and feel of the form used in edit and new views|
-|app/helpers/posts_helper.rb                  |Helper functions to be used from the post views|
-|app/assets/stylesheets/scaffolds.css.scss    |Cascading style sheet to make the scaffolded views look better|
-|app/assets/stylesheets/posts.css.scss        |Cascading style sheet for the posts controller|
-|app/assets/javascripts/posts.js.coffee       |CoffeeScript for the posts controller|
-|test/unit/post_test.rb                       |Unit testing harness for the posts model|
-|test/functional/posts_controller_test.rb     |Functional testing harness for the posts controller|
-|test/unit/helpers/posts_helper_test.rb       |Unit testing harness for the posts helper|
-|config/routes.rb                             |Edited to include routing information for posts|
+|_.Archivo                                    |_.Propósito|
+|db/migrate/20100207214725_create_posts.rb    |Migración para crear la tabla de posts en la base de datos (tu numbre incluirá una fecha y hora diferente)|
+|app/models/post.rb                           |El modelo Post|
+|test/fixtures/posts.yml                      |posts sin sentido para ser usados en pruebas|
+|app/controllers/posts_controller.rb          |El controlador de los Posts|
+|app/views/posts/index.html.erb               |Una vista para desplegar un indice de todos los posts|
+|app/views/posts/edit.html.erb                |Una vista para editar un post existente|
+|app/views/posts/show.html.erb                |Una vista para desplegar un post existente|
+|app/views/posts/new.html.erb                 |Una vista para crear un nuevo post|
+|app/views/posts/_form.html.erb               |Un página parcial para tener el control del diseño en las formas dentro de las vistas de edición y nuevos|
+|app/helpers/posts_helper.rb                  |Funciones de ayuda para ser usadas dentro de las vistas de los posts|
+|app/assets/stylesheets/scaffolds.css.scss    |Hoja de estilo en cascada (css) para hacer que el scaffold luzca mejor|
+|app/assets/stylesheets/posts.css.scss        |Css para el controlador de los posts|
+|app/assets/javascripts/posts.js.coffee       |Archivo CoffeeScript para el controlador de los posts|
+|test/unit/post_test.rb                       |Pruebas Unit para el modelo Post|
+|test/functional/posts_controller_test.rb     |Pruebas funcionales para el controlador de posts|
+|test/unit/helpers/posts_helper_test.rb       |Pruebas Unit para las funciones de ayuda de los posts|
+|config/routes.rb                             |Modificado para incluir información sobre los posts|
 
 NOTE. While scaffolding will get you up and running quickly, the code it
 generates is unlikely to be a perfect fit for your application. You'll most
